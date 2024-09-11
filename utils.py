@@ -80,11 +80,12 @@ class OptList:
 def create_graph_from_csv(file_path, add_loops = True):
     # Create an empty dictionary to store adjacency lists
     adjacency_lists = {}
+    edge_list = []
 
     # Read the CSV file and add edges to the adjacency lists
     with open(file_path, 'r') as csvfile:
-        csv_reader = csv.reader(csvfile)
-        header = next(csv_reader)  # Skip the header
+        csv_reader = csv.reader(csvfile, delimiter=" ")
+        #header = next(csv_reader)  # Skip the header
 
         for row in csv_reader:
             a, b = row
@@ -103,8 +104,10 @@ def create_graph_from_csv(file_path, add_loops = True):
             if add_loops:
                     adjacency_lists[b].append(b)
             adjacency_lists[b].append(a)
+            
+            edge_list.append((a,b))
 
-    return adjacency_lists
+    return adjacency_lists, edge_list
 
 def generate_random_node_order(graph):
     # Get a list of nodes from the graph
