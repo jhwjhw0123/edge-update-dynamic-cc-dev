@@ -6,7 +6,7 @@ import csv
 
 class OptList:
     def __init__(self):
-        self.a, self.d, self.index = [], {}, 0
+        self.a, self.d, self.index, self.degree = [], {}, 0, 0
      
     def __contains__(self, v) -> bool:
         return v in self.d
@@ -40,6 +40,7 @@ class OptList:
 
         self.d[v] = len(self.a)
         self.a.append(v)
+        self.degree = self.degree + 1
 
         return True
     
@@ -49,6 +50,7 @@ class OptList:
 
         self.d[v] = len(self.a)
         self.a.append(v)
+        self.degree = self.degree + 1
 
         return True
         
@@ -58,6 +60,7 @@ class OptList:
             return False
 
         e, i = self.a.pop(), self.d.pop(v)
+        self.degree = self.degree - 1
         if i < len(self.a):
             self.a[i], self.d[e] = e, i
         
@@ -80,6 +83,7 @@ class OptList:
 def create_graph_from_csv(file_path, add_loops = True):
     # Create an empty dictionary to store adjacency lists
     adjacency_lists = {}
+    edge_list = []
 
     # Read the CSV file and add edges to the adjacency lists
     with open(file_path, 'r') as csvfile:
@@ -87,9 +91,10 @@ def create_graph_from_csv(file_path, add_loops = True):
         header = next(csv_reader)  # Skip the header
 
         for row in csv_reader:
-            a, b = row
+            a, b = row[0].split(" ")
             a = int(a)
             b = int(b)
+            edge_list.append((a,b))
 
             # Add edge to the adjacency lists
             if a not in adjacency_lists:
@@ -104,7 +109,7 @@ def create_graph_from_csv(file_path, add_loops = True):
                     adjacency_lists[b].append(b)
             adjacency_lists[b].append(a)
 
-    return adjacency_lists
+    return adjacency_lists, edge_list
 
 def generate_random_node_order(graph):
     # Get a list of nodes from the graph
