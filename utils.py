@@ -87,8 +87,8 @@ def create_graph_from_csv(file_path, add_loops = True):
 
     # Read the CSV file and add edges to the adjacency lists
     with open(file_path, 'r') as csvfile:
-        csv_reader = csv.reader(csvfile)
-        header = next(csv_reader)  # Skip the header
+        csv_reader = csv.reader(csvfile, delimiter=" ")
+        #header = next(csv_reader)  # Skip the header
 
         for row in csv_reader:
             a, b = row[0].split(" ")
@@ -108,6 +108,8 @@ def create_graph_from_csv(file_path, add_loops = True):
             if add_loops:
                     adjacency_lists[b].append(b)
             adjacency_lists[b].append(a)
+            
+            edge_list.append((a,b))
 
     return adjacency_lists, edge_list
 
