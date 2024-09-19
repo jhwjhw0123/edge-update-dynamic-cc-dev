@@ -5,8 +5,11 @@ import csv
 
 
 class OptList:
-    def __init__(self):
-        self.a, self.d, self.index, self.degree = [], {}, 0, 0
+    def __init__(self, a=None, d=None, degree=None):
+        if not a:
+            self.a, self.d, self.index, self.degree = [], {}, 0, 0
+        else:
+            self.a, self.d, self.index, self.degree = a, d, 0, degree
      
     def __contains__(self, v) -> bool:
         return v in self.d
