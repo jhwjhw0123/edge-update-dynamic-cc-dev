@@ -97,7 +97,6 @@ def create_graph_from_csv(file_path, add_loops = True):
             a, b = row[0].split(" ")
             a = int(a)
             b = int(b)
-            edge_list.append((a,b))
 
             # Add edge to the adjacency lists
             if a not in adjacency_lists:
